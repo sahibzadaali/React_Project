@@ -28,6 +28,20 @@
   color: #61dafb;
 }
 
+span{
+  display: inline-block;
+  background-color: antiquewhite;
+  padding: 10px;
+  margin: 5px;
+}
+
+.list-wrapper{
+  border: 1px solid #ccc;
+  margin: auto;
+  width: 500px;
+  margin-top: 10px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

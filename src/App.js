@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route } from 'react-router-dom'
+import Home from './component/Home';
+import RestaurantUpdate from './component/RestaurantUpdate';
+import RestaurantCreate from './component/RestaurantCreate';
+import RestaurantDetail from './component/RestaurantDetail';
+import RestaurantSearch from './component/RestaurantSearch';
+import RestaurantList from './component/RestaurantList';
+import Login from './component/Login';
+import Logout from './component/Logout';
+import Protected from './component/Protected';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter> 
+       <Route path='/login'
+        render={props=>(
+          <Login {...props}/>
+        )}
+        >  
+        </Route>
+        <Route path='/logout'>
+          <Logout/>
+        </Route>
+        <Protected exact path="/" component={Home}/>
+        <Protected  path="/list" component={RestaurantList}/>
+        <Protected  path="/update/:id" component={RestaurantUpdate}/>
+        <Protected  path="/details" component={RestaurantDetail}/>
+        <Protected  path="/create" component={RestaurantCreate}/>
+        <Protected  path="/search" component={RestaurantSearch}/>
+ 
+      </BrowserRouter>
     </div>
   );
 }
