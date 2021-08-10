@@ -12,9 +12,11 @@ class Login extends Component {
     Login(){
         fetch('http://localhost:3000/login?q='+this.state.name).then((data)=>{
             data.json().then((resp)=>{
+               
                 if(resp.length>0){
+                    console.log(resp,'resp');
                     localStorage.setItem('login',JSON.stringify(resp));
-                    console.warn(this.props.history.push('list'));
+                    console.warn(this.props.history.push('/list'));
                 }else{
                     alert("Please check username and password")
                 }

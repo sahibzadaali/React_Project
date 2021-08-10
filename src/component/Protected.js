@@ -1,12 +1,12 @@
 import React from 'react';
 import { Redirect,Route } from 'react-router-dom';
 
-const Protected=({component:cmp,...rest})=>(
+const Protected=({component:Component,...rest})=>(
     <Route
     {...rest}
     render={(props)=>
         localStorage.getItem('login')?(
-            <cmp {...props}/>
+            <Component {...props}/>
         ):
         <Redirect
         to="/login"/>

@@ -40,7 +40,7 @@ class RestaurantList extends Component {
         const { list } = this.state;
         return (
             <div>
-                <Navbar/>
+                <NavBarMenu/>
                 <h1>Restaurant List</h1>
                 {list ?
                     <Table striped bordered hover>

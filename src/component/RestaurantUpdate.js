@@ -42,20 +42,26 @@ class RestaurantUpdate extends Component {
             })
         })
     }
+
+    handleChange=e=>{
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
     render() {
         return (
             <div>
                 <h1>Restaurant Update</h1>
                 <div>
                     <NavBarMenu/>
-                    <input onChange={(event) => { this.setState({ name: event.target.value })}}
-                        placeholder="Restaurant Name" value={this.state.name}/><br /><br />
-                    <input onChange={(event) => { this.setState({ email: event.target.value })}}
-                        placeholder="Restaurant Email" value={this.state.email}/><br /><br />
-                    <input onChange={(event) => { this.setState({ rating: event.target.value })}}
-                        placeholder="Restaurant Rating" value={this.state.rating}/><br /><br />
-                    <input onChange={(event) => { this.setState({ address: event.target.value })}}
-                        placeholder="Restaurant Address" value={this.state.address}/><br /><br />
+                         <input onChange={this.handleChange}
+                        placeholder="Restaurant Name" value={this.state.name} name="name"/><br /><br />
+                    <input onChange={this.handleChange}
+                        placeholder="Restaurant Email" value={this.state.email} name="email"/><br /><br />
+                    <input onChange={this.handleChange}
+                        placeholder="Restaurant Rating" value={this.state.rating} name="rating"/><br /><br />
+                    <input onChange={this.handleChange}
+                        placeholder="Restaurant Address" value={this.state.address} name="address"/><br /><br />
                         <button onClick={()=>{this.update()}}>Update Restaurant</button>
                 </div>
             </div>

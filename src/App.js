@@ -20,9 +20,7 @@ function App() {
         )}
         >  
         </Route>
-        <Route path='/logout'>
-          <Logout/>
-        </Route>
+        <Route path='/logout' component={Logout}/>
         <Protected exact path="/" component={Home}/>
         <Protected  path="/list" component={RestaurantList}/>
         <Protected  path="/update/:id" component={RestaurantUpdate}/>

@@ -10,6 +10,7 @@ class RestaurantCreate extends Component {
             address:""
         }
     }
+
     create(){
         fetch('http://localhost:3000/restaurantdb',{
             method:"Post",
@@ -24,20 +25,27 @@ class RestaurantCreate extends Component {
             })
         })
     }
+
+    handleChange=e=>{
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
     render() {
         return (
             <div>
                 <NavBarMenu/>
                 <h1>Restaurant Create</h1>
                 <div>
-                    <input onChange={(event) => { this.setState({ name: event.target.value }) }}
-                        placeholder="Restaurant Name" /><br /><br />
-                    <input onChange={(event) => { this.setState({ email: event.target.value }) }}
-                        placeholder="Restaurant Email" /><br /><br />
-                    <input onChange={(event) => { this.setState({ rating: event.target.value }) }}
-                        placeholder="Restaurant Rating" /><br /><br />
-                    <input onChange={(event) => { this.setState({ address: event.target.value }) }}
-                        placeholder="Restaurant Address" /><br /><br />
+                        <input onChange={this.handleChange}
+                        placeholder="Restaurant Name" name="name"/><br /><br />
+                    <input onChange={this.handleChange}
+                        placeholder="Restaurant Email" name="email"/><br /><br />
+                    <input onChange={this.handleChange}
+                        placeholder="Restaurant Rating" name="rating"/><br /><br />
+                    <input onChange={this.handleChange}
+                        placeholder="Restaurant Address" name="address"/><br /><br />
                         <button onClick={()=>{this.create()}}>Add Restaurant</button>
                 </div>
             </div>
