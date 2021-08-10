@@ -1,72 +1,71 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, match } from 'react';
+import { useParams, match } from 'react-router-dom';
 import NavBarMenu from './NavBarMenu';
 
-class RestaurantUpdate extends Component {
-    constructor(){
-        super();
-        this.state={
-            name:"",
-            email:"",
-            rating:"",
-            address:"",
-            id:""
-        }
-    }
+function RestaurantUpdate() {
+    const [data, setData] = useState({
+        name: "",
+        email: "",
+        rating: "",
+        address: ""
+    })
 
-    componentDidMount(){
-        fetch('http://localhost:3000/restaurantdb/'+this.props.match.params.id).then((response)=>{
-            console.log(response,'response');
-            response.json().then((result)=>{
-                this.setState({
-                    name:result.name,
-                    email:result.email,
-                    id:result.id,
-                    rating:result.rating,
-                    address:result.address
+    const params = useParams();
+    useEffect(() => {
+        fetch('http://localhost:3000/restaurantdb/' + match.params.id).then((response) => {
+            console.log(params.id, 'response');
+            response.json().then((result) => {
+                console.log(result, 'result');
+                setData({
+                    name: result.name,
+                    email: result.email,
+                    id: result.id,
+                    rating: result.rating,
+                    address: result.address
                 })
             })
         })
-    }
+    }, []);
 
-    update(){
+    const update = () => {
         console.log("Done");
-        fetch('http://localhost:3000/restaurantdb/'+this.state.id,{
-            method:"PUT",
-            headers:{
-                'Content-Type':'application/json'
+        fetch('http://localhost:3000/restaurantdb/' + data.id, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body:JSON.stringify(this.state)
-        }).then((result)=>{
-            result.json().then(()=>{
+            body: JSON.stringify(data)
+        }).then((result) => {
+            console.log(result, 'result');
+            result.json().then(() => {
                 alert("Restaurant had been updated");
             })
         })
     }
 
-    handleChange=e=>{
-        this.setState({
-            [e.target.name]:e.target.value
+    const handleChange = e => {
+        setData({
+            [e.target.name]: e.target.value
         })
     }
-    render() {
-        return (
+
+    return (
+        <div>
+            <h1>Restaurant Update</h1>
             <div>
-                <h1>Restaurant Update</h1>
-                <div>
-                    <NavBarMenu/>
-                         <input onChange={this.handleChange}
-                        placeholder="Restaurant Name" value={this.state.name} name="name"/><br /><br />
-                    <input onChange={this.handleChange}
-                        placeholder="Restaurant Email" value={this.state.email} name="email"/><br /><br />
-                    <input onChange={this.handleChange}
-                        placeholder="Restaurant Rating" value={this.state.rating} name="rating"/><br /><br />
-                    <input onChange={this.handleChange}
-                        placeholder="Restaurant Address" value={this.state.address} name="address"/><br /><br />
-                        <button onClick={()=>{this.update()}}>Update Restaurant</button>
-                </div>
+                <NavBarMenu />
+                <input onChange={handleChange}
+                    placeholder="Restaurant Name" value={data.name} name="name" /><br /><br />
+                <input onChange={handleChange}
+                    placeholder="Restaurant Email" value={data.email} name="email" /><br /><br />
+                <input onChange={handleChange}
+                    placeholder="Restaurant Rating" value={data.rating} name="rating" /><br /><br />
+                <input onChange={handleChange}
+                    placeholder="Restaurant Address" value={data.address} name="address" /><br /><br />
+                <button onClick={() => { update() }}>Update Restaurant</button>
             </div>
-        );
-    }
+        </div>
+    )
 }
 
-export default RestaurantUpdate;
+export default RestaurantUpdate

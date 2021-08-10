@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Navbar,Nav,Container} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome,faPlus,faList,faUser,faSearch } from '@fortawesome/free-solid-svg-icons'
 import {Link} from 'react-router-dom'
 
-class NavBarMenu extends Component {
-    render() {
-        return (
-            <div>
-                  <Navbar bg="light" expand="lg">
+const NavBarMenu=()=>{
+  return (
+    <div>
+        <Navbar bg="light" expand="lg">
           <Container>
             <Navbar.Brand href="#home">Reasturant</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -27,9 +26,8 @@ class NavBarMenu extends Component {
             </Navbar.Collapse>
           </Container>
         </Navbar>
-            </div>
-        );
-    }
+    </div>
+  )
 }
 
-export default NavBarMenu;
+export default NavBarMenu

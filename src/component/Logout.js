@@ -1,14 +1,14 @@
 import React from 'react';
 import {
     Redirect
-}from 'react-router-dom';
+} from 'react-router-dom';
 import NavBarMenu from './NavBarMenu';
 
-const Logout=()=>{
-    <NavBarMenu/>
+const Logout = () => {
+    <NavBarMenu />
     localStorage.clear();
-    return(
-         <Redirect to="/login"></Redirect>
+    return (
+        <Redirect to="/login"></Redirect>
     )
 }
 

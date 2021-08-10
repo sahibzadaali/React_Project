@@ -1,56 +1,46 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react'
 import NavBarMenu from './NavBarMenu';
-class RestaurantCreate extends Component {
-    constructor(){
-        super();
-        this.state={
-            name:"",
-            email:"",
-            rating:"",
-            address:""
-        }
-    }
+function RestaurantCreate() {
+    const [data, setData] = useState({
+        name: "",
+        email: "",
+        rating: "",
+        address: ""
+    })
 
-    create(){
-        fetch('http://localhost:3000/restaurantdb',{
-            method:"Post",
-            headers:{
-                'Content-Type':'application/json'
+    const create = () => {
+        fetch('http://localhost:3000/restaurantdb', {
+            method: "Post",
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body:JSON.stringify(this.state)
-        }).then((result)=>{
-            console.log(result,'result');
-            result.json().then((resp)=>{
+            body: JSON.stringify(data)
+        }).then((result) => {
+            console.log(result, 'result');
+            result.json().then((resp) => {
                 alert("Restaurant has been added");
             })
         })
     }
 
-    handleChange=e=>{
-        this.setState({
-            [e.target.name]:e.target.value
-        })
+    const handleChange = (event) => {
+        setData((prevState) => ({
+            ...prevState,
+            [event.target.name]: event.target.value
+        }))
     }
 
-    render() {
-        return (
-            <div>
-                <NavBarMenu/>
-                <h1>Restaurant Create</h1>
-                <div>
-                        <input onChange={this.handleChange}
-                        placeholder="Restaurant Name" name="name"/><br /><br />
-                    <input onChange={this.handleChange}
-                        placeholder="Restaurant Email" name="email"/><br /><br />
-                    <input onChange={this.handleChange}
-                        placeholder="Restaurant Rating" name="rating"/><br /><br />
-                    <input onChange={this.handleChange}
-                        placeholder="Restaurant Address" name="address"/><br /><br />
-                        <button onClick={()=>{this.create()}}>Add Restaurant</button>
-                </div>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <NavBarMenu />
+            <h1>Restaurant Create</h1>
+            <input type="text" onChange={handleChange} placeholder="Restaurant Name" name="name" /><br /><br />
+            <input type="email" onChange={handleChange} placeholder="Restaurant Email" name="email" /><br /><br />
+            <input type="text" onChange={handleChange} placeholder="Restaurant Rating" name="rating" /><br /><br />
+            <input type="text" onChange={handleChange} placeholder="Restaurant Address" name="address" /><br></br>
+            <button onClick={() => create()}>Add Restaurant</button>
+        </div>
+    )
 }
 
-export default RestaurantCreate;
+export default RestaurantCreate
