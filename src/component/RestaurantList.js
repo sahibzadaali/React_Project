@@ -4,32 +4,36 @@ import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit,faTrash } from '@fortawesome/free-solid-svg-icons'
 import NavBarMenu from './NavBarMenu';
+import axios from 'axios';
+import {useParams} from 'react-router-dom';
 
 function RestaurantList() {
     const [list,setList]=useState([]);
 
     useEffect(() => {
         getData();
-      });
+      },[]);
  
-     const getData=()=>{
-         fetch('http://localhost:3000/restaurantdb')
-         .then(res => res.json())
-         .then((result) => {
-            setList(result)
+    const getData=()=>{
+         axios.get('http://localhost:3000/restaurantdb')
+         .then(function (response){
+             setList(response.data);
+         })
+         .then(function(error){
+             console.log(error);
          })
      }
  
-     const deleteItem = (id) => {
-         fetch('http://localhost:3000/restaurantdb/'+id,{
-             method:"DELETE",
-         }).then((result)=>{
-             result.json().then(()=>{
-                 alert("Restaurant had been Deleted");
-                 getData();
-             })
-         })
-        }
+    const deleteItem = (id) =>{
+        axios.delete(`http://localhost:3000/restaurantdb/${id}`)
+        .then(res=>{
+            getData();
+        })
+        .then(function(error){
+            console.log(error);
+        })
+    }
+    
     return (
         <div>
             <NavBarMenu/>

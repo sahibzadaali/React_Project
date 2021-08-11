@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import NavBarMenu from './NavBarMenu';
@@ -9,16 +10,17 @@ const Login = () => {
         name: "",
         password: ""
     })
+
     const Login = () => {
-        fetch('http://localhost:3000/login?q=' + data.name).then((data) => {
-            data.json().then((resp) => {
-                if (resp.length > 0) {
-                    localStorage.setItem('login', JSON.stringify(resp));
-                    console.warn(history.push('/list'));
-                } else {
-                    alert("Please check username and password")
-                }
-            })
+        axios.get('http://localhost:3000/login')
+        .then((response)=>{
+            if(response.status==200){
+                localStorage.setItem('login',JSON.stringify(response));
+               history.push('/list');
+            }
+            else{
+                alert("Please check username and password")
+            }
         })
     }
 

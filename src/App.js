@@ -23,10 +23,10 @@ function App() {
         <Route path='/logout' component={Logout}/>
         <Protected exact path="/" component={Home}/>
         <Protected  path="/list" component={RestaurantList}/>
-        {/* <Protected  path="/update/:id" component={RestaurantUpdate}/> */}
-        <Route path="/update" render={props=>(
+        <Protected  path="/update/:id" component={RestaurantUpdate}/>
+        {/* <Route path="/update" render={props=>(
           <RestaurantUpdate {...props}/>
-        )}/>
+        )}/> */}
         <Protected  path="/details" component={RestaurantDetail}/>
         <Protected  path="/create" component={RestaurantCreate}/>
         <Protected  path="/search" component={RestaurantSearch}/>

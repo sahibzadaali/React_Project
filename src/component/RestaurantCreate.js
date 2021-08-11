@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import NavBarMenu from './NavBarMenu';
+
 function RestaurantCreate() {
     const [data, setData] = useState({
         name: "",
@@ -9,17 +11,12 @@ function RestaurantCreate() {
     })
 
     const create = () => {
-        fetch('http://localhost:3000/restaurantdb', {
-            method: "Post",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then((result) => {
-            console.log(result, 'result');
-            result.json().then((resp) => {
-                alert("Restaurant has been added");
-            })
+        axios.post('http://localhost:3000/restaurantdb',data)
+        .then(res=>{
+            alert("Restaurant had been updated");
+        })
+        .then(function(error){
+            console.log(error);
         })
     }
 

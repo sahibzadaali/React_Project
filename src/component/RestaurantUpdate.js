@@ -1,4 +1,5 @@
-import React, { useState, useEffect, match } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { useParams, match } from 'react-router-dom';
 import NavBarMenu from './NavBarMenu';
 
@@ -12,10 +13,8 @@ function RestaurantUpdate() {
 
     const params = useParams();
     useEffect(() => {
-        fetch('http://localhost:3000/restaurantdb/' + match.params.id).then((response) => {
-            console.log(params.id, 'response');
+        fetch('http://localhost:3000/restaurantdb/'+params.id).then((response) => {
             response.json().then((result) => {
-                console.log(result, 'result');
                 setData({
                     name: result.name,
                     email: result.email,
@@ -27,28 +26,35 @@ function RestaurantUpdate() {
         })
     }, []);
 
-    const update = () => {
-        console.log("Done");
-        fetch('http://localhost:3000/restaurantdb/' + data.id, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then((result) => {
-            console.log(result, 'result');
-            result.json().then(() => {
-                alert("Restaurant had been updated");
-            })
+    // useEffect(() => {
+    //     axios.get('http://localhost:3000/restaurantdb/'+params.id)
+    //     .then((response)=>{
+    //         setData({
+    //             response:response.name,
+    //             response:response.email,
+    //             response:response.id,
+    //             rating:response.rating,
+    //             address:response.address
+    //         })
+    //     })
+    // }, []);
+
+    
+    const update = ()=>{
+        axios.put(`http://localhost:3000/restaurantdb/${data.id}`,data)
+        .then((response)=>{
+            alert("Restaurant had been updated")
         })
     }
 
-    const handleChange = e => {
-        setData({
-            [e.target.name]: e.target.value
-        })
+    const handleChange = (event) => {
+        setData((prevState) => ({
+            ...prevState,
+            [event.target.name]: event.target.value
+        }))
     }
 
+    
     return (
         <div>
             <h1>Restaurant Update</h1>
