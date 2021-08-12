@@ -6,23 +6,25 @@ import { faEdit,faTrash } from '@fortawesome/free-solid-svg-icons'
 import NavBarMenu from './NavBarMenu';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
+import {connect} from 'react-redux';
+import { fetchRestaurantList } from '../redux/action/RestaurantListAction';
 
-function RestaurantList() {
-    const [list,setList]=useState([]);
+function RestaurantList({list,fetchRestaurantList}) {
+    // const [list,setList]=useState([]);
 
     useEffect(() => {
-        getData();
+        fetchRestaurantList();
       },[]);
  
-    const getData=()=>{
-         axios.get('http://localhost:3000/restaurantdb')
-         .then(function (response){
-             setList(response.data);
-         })
-         .then(function(error){
-             console.log(error);
-         })
-     }
+    // const getData=()=>{
+    //      axios.get('http://localhost:3000/restaurantdb')
+    //      .then(function (response){
+    //          setList(response.data);
+    //      })
+    //      .then(function(error){
+    //          console.log(error);
+    //      })
+    //  }
  
     const deleteItem = (id) =>{
         axios.delete(`http://localhost:3000/restaurantdb/${id}`)
@@ -37,6 +39,9 @@ function RestaurantList() {
     return (
         <div>
             <NavBarMenu/>
+            list?.loading? (<h1>Loading...</h1>)
+            :list.error:(<h1>{list.error}</h1>)
+            :(
             <h1>Restaurant List</h1>
             {list && list.length>0 ?
                 <Table striped bordered hover>
@@ -66,8 +71,22 @@ function RestaurantList() {
                     </tbody>
                 </Table>
                 : <span>Please Wait</span>}
+            )
         </div>
     );
 }
 
-export default RestaurantList
+const mapStateToProps=(state)=>{
+    return{
+        list:state.list
+    }
+}
+
+const mapDispatchToProps=(dispatch)=>{
+    return{
+        fetchRestaurantList:function(){
+            dispatch(fetchRestaurantList())
+        }
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(RestaurantList);
