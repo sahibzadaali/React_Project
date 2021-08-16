@@ -22,16 +22,22 @@ export const restaurantListFailure=(error)=>{
 }
 console.log("Done")
 export const fetchRestaurantList=()=>{
-    return(dispatch)=>{
-        dispatch(restaurantListRequest)
-        axios.get(' http://localhost:3000/restaurantdb')
-        .then(response=>{
-            const resultList = response;
-            dispatch(restaurantListSuccess(resultList));
-        })
-        .catch((error)=>{
-            const errorMsg = error.message
-            dispatch(restaurantListFailure(errorMsg))
-        })
-    }
+    console.log('newone')
+    return axios.get('http://localhost:3000/restaurantdb')
+    
+    // dispatch=>{
+    //     dispatch(restaurantListRequest())
+
+    //     return axios.get('http://localhost:3000/restaurantdb').then(response=>{
+    //         console.log(response,'response');
+    //         const resultList = response;
+    //         dispatch(restaurantListSuccess(resultList));
+    //     })
+    //     // .catch((error)=>{
+    //     //     console.log('errrr',error)
+    //     //     const errorMsg = error.message
+    //     //     dispatch(restaurantListFailure(errorMsg))
+    //     // })
+    // }
+    
 }
